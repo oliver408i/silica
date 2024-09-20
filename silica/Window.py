@@ -23,3 +23,8 @@ class Window:
     def add_widget(self, widget: Widget):
         """Add a widget (Button, Label, etc.) to the window."""
         self.window.contentView().addSubview_(widget.widget)
+    
+    def close(self):
+        """Close window and quit the app"""
+        self.window.close()
+    

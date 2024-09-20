@@ -1,6 +1,8 @@
 from Cocoa import NSStatusBar, NSStatusItem, NSVariableStatusItemLength, NSMenu, NSMenuItem, NSImage, NSApp
 from .App import App
 
+# Major WIP, not working yet
+
 class MenubarApp(App):
     def __init__(self):
         """Initialize the Menubar app, inheriting from the base App class."""

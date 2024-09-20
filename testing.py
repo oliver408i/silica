@@ -1,5 +1,6 @@
 from silica import App, Window, Label, Button
 import silica
+import silica.FloatingPanel
 
 # Example usage
 app = App()
@@ -19,7 +20,9 @@ def on_button_click():
     print("button pressed", silica.Constants.MessageBoxButtons.convert_response_to_index(button))
     
 # Create a window
-window = Window(title="My Centered App", width=400, height=300)
+#window = Window(title="My Centered App", width=400, height=300)
+window = silica.FloatingPanel(width=400, height=500, ignoreMouseEvents=False)
+app.set_float_policy()
 
 # Create a label and center it at a specific coordinate
 label = Label(text="Welcome to the centered app!", width=200, height=20)
@@ -82,10 +85,30 @@ warning_button.set_no_bezel()
 warning_button.set_corner_radius(30)
 window.add_widget(warning_button)
 
+def on_close_button_click():
+    window.close()
+    app.quit()
+
+close_button = Button(
+    text="Close",
+    width=150,
+    height=100,
+    command=on_close_button_click
+)
+close_button.set_font("Helvetica-Bold", 16)
+close_button.set_background_color(silica.Color.rgba(1, 0, 0, 0.5))
+close_button.set_text_color(silica.Color.rgba(1, 1, 1, 1))
+close_button.set_bezel_style(silica.Constants.BezelStyle.TexturedRounded)
+close_button.set_center_at(200, 400)  # Center the button at (200, 250)
+close_button.set_no_bezel()
+close_button.set_corner_radius(30)
+window.add_widget(close_button)
+
 # Add an input box
 inputBox = silica.Input(width=200, height=24, placeholder="Enter something")
 inputBox.set_center_at(200, 50)
 window.add_widget(inputBox)
 
+window.show()
 # Run the application
 app.run()

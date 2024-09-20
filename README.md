@@ -10,3 +10,4 @@ Silica currently supports the following functions:
 - Labels (text fields, WIP styling for these)
 - Message boxes (popup info boxes, with customizable buttons and input boxes)
 - Notifications
+- Menubar (WIP)
