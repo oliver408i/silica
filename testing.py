@@ -82,5 +82,10 @@ warning_button.set_no_bezel()
 warning_button.set_corner_radius(30)
 window.add_widget(warning_button)
 
+# Add an input box
+inputBox = silica.Input(width=200, height=24, placeholder="Enter something")
+inputBox.set_center_at(200, 50)
+window.add_widget(inputBox)
+
 # Run the application
 app.run()
