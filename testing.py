@@ -10,7 +10,7 @@ messageBoxManager = silica.MessageBoxManager()
 def on_button_click():
     response, button = messageBoxManager.show_input_message(
         title="Information",
-        message_text="Is rian gay.",
+        message_text="something something",
         informative_text="yes or no.",
         buttons=["very much", "defintally", "100%"],
         icon_path="./shapezio.jpg"

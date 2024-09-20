@@ -1,3 +1,5 @@
 .DS_Store
 venv
-silica/__pycache__
+*.pyc
+*.pyo
+__pycache__
