@@ -1,8 +1,8 @@
-from Cocoa import NSButton, NSMakeRect, NSFont, NSMutableAttributedString, NSTrackingArea, NSTrackingMouseEnteredAndExited, NSTrackingActiveAlways, NSColor
+from Cocoa import NSButton, NSMakeRect, NSFont, NSMutableAttributedString, NSTrackingArea, NSTrackingMouseEnteredAndExited, NSTrackingActiveAlways, NSColor, NSButtonTypeSwitch, NSButtonTypeRadio, NSControlStateValueOn, NSControlStateValueOff
 from .Widget import Widget
 
 class Button(Widget):
-    def __init__(self, text: str="Button", width: int=100, height: int=30, command: callable=None, useFrame: bool=True):
+    def __init__(self, text: str="Button", width: int=100, height: int=30, command: callable=None, useFrame: bool=True, noTracking: bool=False):
         super().__init__(width, height)
         if (useFrame):
             frame = NSMakeRect(0, 0, width, height)
@@ -14,9 +14,11 @@ class Button(Widget):
 
         if command:
             self.set_action(command)
+        
+        if not noTracking:
 
-        # Add a tracking area to detect mouse hover events on the button itself
-        self.add_tracking_area()
+            # Add a tracking area to detect mouse hover events on the button itself
+            self.add_tracking_area()
 
         # Background color properties for hover and click effects
         self.default_background_color = NSColor.whiteColor()
@@ -24,7 +26,19 @@ class Button(Widget):
         self.click_background_color = NSColor.darkGrayColor()
 
         # Set the initial background color
-        self._update_background_color(self.default_background_color)
+        self.__update_background_color(self.default_background_color)
+    
+    def make_checkbox(self) -> None:
+        """Make the button a checkbox."""
+        self.widget.setButtonType_(NSButtonTypeSwitch)
+    
+    def make_radio_button(self) -> None:
+        """Make the button a radio button."""
+        self.widget.setButtonType_(NSButtonTypeRadio)
+    
+    def get_button_checked(self) -> bool:
+        """Get the checked state of the button. Only for checkbox and radio buttons."""
+        return self.widget.state() == NSControlStateValueOn
     
     def update_text(self, text: str) -> None:
         """Update the text of the button."""

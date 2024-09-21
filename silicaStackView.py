@@ -9,9 +9,10 @@ image = silica.Image(width=200, height=200, image_path="shapezio.jpg", useFrame=
 
 stackView.add_widget(image)
 
-label = silica.Label(text="Hello, World!", width=200, height=100, useFrame=False)
+checkbox_button = silica.Button(text="Checkbox", width=200, height=100)
+checkbox_button.make_checkbox()
 
-stackView.add_widget(label)
+stackView.add_widget(checkbox_button)
 
 window.add_widget(stackView)
 
