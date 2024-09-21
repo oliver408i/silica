@@ -1,4 +1,4 @@
-from Cocoa import NSWindow, NSApplication, NSApp, NSMakeRect, NSBackingStoreBuffered, NSObject
+from Cocoa import NSWindow, NSApplication, NSApp, NSMakeRect, NSBackingStoreBuffered, NSObject, NSWindowStyleMaskFullScreen
 from PyObjCTools import AppHelper
 from .Widget import Widget
 
@@ -31,6 +31,26 @@ class Window:
     def set_size(self, width, height):
         """Set the size of the window."""
         self.window.setContentSize_((width, height))
+    
+    def minimize(self):
+        """Minimize the window."""
+        self.window.miniaturize_(None)
+    
+    def toggle_fullscreen(self):
+        """Toggle fullscreen mode."""
+        self.window.toggleFullScreen_(None)
+    
+    def get_location(self):
+        """Return the current location (x, y) of the window."""
+        return self.window.frame().origin.x, self.window.frame().origin.y
+    
+    def get_size(self):
+        """Return the current size (width, height) of the window."""
+        return self.window.frame().size.width, self.window.frame().size.height
+
+    def is_fullscreen(self):
+        """Return True if the window is in fullscreen mode, False otherwise."""
+        return (self.window.styleMask() & NSWindowStyleMaskFullScreen) != 0
     
     def close(self):
         """Close window and quit the app"""

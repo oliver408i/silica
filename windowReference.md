@@ -14,15 +14,17 @@ To add buttons, labels, and inputs to a window:
 window.add_widget(someWidget)
 ```
 
-### Adjust window size
-You and move and resize the window using
-```py
-window.move_to(100,100)
-window.set_size(300,400)
-```
-
 ### Running the app
 To run the app, you must use the event loop from the App object, not the Window object.
 ```py
 app.run()
 ```
+
+### Window actions
+- `minimize()` - Minimizes the window (it will not be brought up again until the user manually do it)
+- `move_to(x, y)` - Move the window
+- `set_size(width, height)` - Resizes the window
+- `toggle_fullscreen()` - Toggles fullscreen
+- `get_size()` - Gets the size (as a tuple) of the window
+- `get_location()` - Gets the location (as a tuple) of the window
+- `is_fullscreen()` - Get if the window is in fullscreen

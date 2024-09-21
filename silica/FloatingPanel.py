@@ -58,6 +58,14 @@ class FloatingPanel:
         """Hide the panel."""
         self.panel.orderOut_(None)
     
+    def get_position(self):
+        """Return the current position (x, y) of the panel."""
+        return self.panel.frame().origin.x, self.panel.frame().origin.y
+
+    def get_size(self):
+        """Return the current size (width, height) of the panel."""
+        return self.panel.frame().size.width, self.panel.frame().size.height
+    
     def close(self):
         """Close the panel"""
         self.panel.close()
