@@ -3,3 +3,6 @@ venv
 *.pyc
 *.pyo
 __pycache__
+build
+dist
+silica.egg-info

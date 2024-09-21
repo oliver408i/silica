@@ -26,7 +26,7 @@ class MessageBoxButtons:
 	Fourth = NSAlertFirstButtonReturn + 3
 
 	@staticmethod
-	def convert_response_to_index(response):
+	def convert_response_to_index(response: int):
 		"""
 		Convert the NSAlert button response into an index based on the number of buttons.
 		

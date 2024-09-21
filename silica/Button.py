@@ -2,10 +2,14 @@ from Cocoa import NSButton, NSMakeRect, NSFont, NSMutableAttributedString, NSTra
 from .Widget import Widget
 
 class Button(Widget):
-    def __init__(self, text="Button", width=100, height=30, command=None):
+    def __init__(self, text: str="Button", width: int=100, height: int=30, command: callable=None, useFrame: bool=True):
         super().__init__(width, height)
-        frame = NSMakeRect(0, 0, width, height)
-        self.widget = NSButton.alloc().initWithFrame_(frame)
+        if (useFrame):
+            frame = NSMakeRect(0, 0, width, height)
+            self.widget = NSButton.alloc().initWithFrame_(frame)
+        else:
+            self.widget = NSButton.alloc().init()
+            self.widget.setTranslatesAutoresizingMaskIntoConstraints_(False)
         self.widget.setTitle_(text)
 
         if command:
@@ -22,11 +26,11 @@ class Button(Widget):
         # Set the initial background color
         self._update_background_color(self.default_background_color)
     
-    def update_text(self, text):
+    def update_text(self, text: str) -> None:
         """Update the text of the button."""
         self.widget.setTitle_(text)
 
-    def add_tracking_area(self):
+    def add_tracking_area(self) -> None:
         """Add a tracking area directly to the button to handle mouse hover events."""
         tracking_options = NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways
 
@@ -38,42 +42,42 @@ class Button(Widget):
             None
         )
         self.widget.addTrackingArea_(self.tracking_area)
-    def set_no_bezel(self):
+    def set_no_bezel(self) -> None:
         """Remove the default bezel from the button."""
         self.widget.setBordered_(False)  # Disables the border or bezel
 
-    def set_corner_radius(self, radius):
+    def set_corner_radius(self, radius: float) -> None:
         """Set the corner radius to give the button a rounded look."""
         self.widget.setWantsLayer_(True)  # Enable the use of layers for the button
         self.widget.layer().setCornerRadius_(radius)
 
-    def set_action(self, command):
+    def set_action(self, command: callable) -> None:
         """Set the action for the button."""
         self.widget.setTarget_(self)
         self.widget.setAction_("buttonClicked:")
         self._command = command
 
     def buttonClicked_(self, sender):
-        """Handle button click."""
+        """Handle button click. Internal only"""
         if self._command:
             self._command()
 
-    def set_font(self, font_name="Helvetica", font_size=14):
+    def set_font(self, font_name: str="Helvetica", font_size: int=14) -> None:
         """Set the font and font size for the button text."""
         font = NSFont.fontWithName_size_(font_name, font_size)
         self.widget.setFont_(font)
 
-    def set_background_color(self, color):
+    def set_background_color(self, color: NSColor) -> None:
         """Set the background color for the button."""
         self.default_background_color = color
-        self._update_background_color(self.default_background_color)
+        self.__update_background_color(self.default_background_color)
     
-    def _update_background_color(self, color):
+    def __update_background_color(self, color: NSColor) -> None:
         self.widget.setWantsLayer_(True)  # Enable layer to change background
         self.widget.layer().setBackgroundColor_(color.CGColor())
 
 
-    def set_text_color(self, color):
+    def set_text_color(self, color : NSColor) -> None:
         """Set the text color for the button."""
         # Get the button's current attributed title
         attributed_title = self.widget.attributedTitle()
@@ -90,25 +94,25 @@ class Button(Widget):
         # Set the modified title back to the button
         self.widget.setAttributedTitle_(mutable_title)
 
-    def set_bezel_style(self, style):
+    def set_bezel_style(self, style) -> None:
         """Set the bezel style of the button."""
         self.widget.setBezelStyle_(style)
     
     def mouseEntered_(self, event):
-        """Change the button appearance when the mouse hovers over it."""
+        """Change the button appearance when the mouse hovers over it. Internal only."""
         self._update_background_color(self.hover_background_color)
 
     def mouseExited_(self, event):
-        """Revert to the default appearance when the mouse leaves the button."""
+        """Revert to the default appearance when the mouse leaves the button. Internal only."""
         self._update_background_color(self.default_background_color)
 
     def mouseDown_(self, event):
-        """Handle mouse down event (button click)."""
+        """Handle mouse down event (button click). Internal only."""
         self._update_background_color(self.click_background_color)
         super(Button, self).mouseDown_(event)
 
     def mouseUp_(self, event):
-        """Handle mouse up event (revert to hover or default state)."""
+        """Handle mouse up event (revert to hover or default state). Internal only."""
         self._update_background_color(self.hover_background_color if self.isMouseOver() else self.default_background_color)
         super(Button, self).mouseUp_(event)
 

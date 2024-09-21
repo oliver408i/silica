@@ -1,5 +1,6 @@
-from Cocoa import NSPanel, NSWindowStyleMaskBorderless, NSNonactivatingPanelMask, NSBackingStoreBuffered, NSFloatingWindowLevel, NSColor, NSApp
+from Cocoa import NSPanel, NSWindowStyleMaskBorderless, NSNonactivatingPanelMask, NSBackingStoreBuffered, NSFloatingWindowLevel, NSColor, NSLayoutConstraint
 from .Widget import Widget
+from typing import Tuple
 
 class NoKeyNoMain(NSPanel):
     def canBecomeKeyWindow(self):
@@ -16,7 +17,11 @@ class NoMainOnly(NSPanel):
         return False
 
 class FloatingPanel:
-    def __init__(self, width=400, height=100, x=300, y=300,ignoreMouseEvents=True, alpha=0.8, nonActivating=True, canBeKeyWindow=True):
+    def __init__(self, width: float=400, height: float=100, x: float=300, y: float=300,ignoreMouseEvents: bool=True, alpha: float=0.8, nonActivating: bool=True, canBeKeyWindow: bool=True):
+        """Initialize a floating panel window with a specified title, width, height, and position. The panel will be transparent and non-activating by default.
+        
+        For a detailed explanation of the parameters, see the floatingPanel reference.
+        """
         if canBeKeyWindow:
             CustomPanel = NoMainOnly
         else:
@@ -38,38 +43,48 @@ class FloatingPanel:
 
         self.content_view = self.panel.contentView()
     
-    def add_widget(self, widget: Widget):
+    def add_widget(self, widget: Widget) -> None:
         """Add a widget (Button, Label, etc.) to the window."""
         self.content_view.addSubview_(widget.widget)
     
-    def move_to(self, x, y):
+    def move_to(self, x: float, y: float) -> None:
         """Move the panel to a new position."""
         self.panel.setFrameOrigin_((x, y))
 
-    def set_size(self, width, height):
+    def set_size(self, width: float, height: float) -> None:
         """Set the size of the panel."""
         self.panel.setContentSize_((width, height))
 
-    def show(self):
+    def show(self) -> None:
         """Show the panel. (bring it to the front)"""
         self.panel.orderFront_(None)
     
-    def hide(self):
+    def hide(self) -> None:
         """Hide the panel."""
         self.panel.orderOut_(None)
     
-    def get_position(self):
+    def get_position(self) -> Tuple[float, float]:
         """Return the current position (x, y) of the panel."""
         return self.panel.frame().origin.x, self.panel.frame().origin.y
 
-    def get_size(self):
+    def get_size(self) -> Tuple[float, float]:
         """Return the current size (width, height) of the panel."""
         return self.panel.frame().size.width, self.panel.frame().size.height
 
     def get_screen(self):
-        """Return the screen that the panel is on."""
+        """Return the objc NSScreen object representing the screen that the panel is on."""
         return self.panel.screen()
     
-    def close(self):
+    def close(self) -> None:
         """Close the panel"""
         self.panel.close()
+    
+    def add_constraints(self, widget: Widget, marginTop=0, marginRight=0, marginBottom=0, marginLeft=0) -> None:
+        """Add a constraints to the panel. Only used for auto layout. Use this to add margins, for example."""
+        widget.widget.setTranslatesAutoresizingMaskIntoConstraints_(False)
+        NSLayoutConstraint.activateConstraints_([
+            widget.widget.topAnchor().constraintEqualToAnchor_constant_(self.content_view.topAnchor(), marginTop),
+            widget.widget.trailingAnchor().constraintEqualToAnchor_constant_(self.content_view.trailingAnchor(), marginRight),
+            widget.widget.bottomAnchor().constraintEqualToAnchor_constant_(self.content_view.bottomAnchor(), marginBottom),
+            widget.widget.leadingAnchor().constraintEqualToAnchor_constant_(self.content_view.leadingAnchor(), marginLeft)
+        ])

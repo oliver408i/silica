@@ -1,12 +1,13 @@
 from Cocoa import NSAlert, NSAlertStyleInformational, NSAlertStyleWarning, NSAlertStyleCritical, NSImage, NSTextField, NSAlertFirstButtonReturn, NSView
 import warnings
+from typing import Optional
 
 class MessageBoxManager:
     def __init__(self):
         """Initialize the MessageBoxManager."""
         pass
 
-    def show_message(self, title="Message", message_text=None, informative_text=None, buttons=None, alert_style=None, icon_path=None, input_fields=None):
+    def show_message(self, title: str="Message", message_text: Optional[str]=None, informative_text: Optional[str]=None, buttons: Optional[list]=None, alert_style: Optional[int]=None, icon_path: Optional[str]=None, input_fields: Optional[list]=None) -> tuple:
         """
         Display a message box with a custom title, message, informative text, buttons, icon, and optional input fields.
         

@@ -1,8 +1,9 @@
 from Cocoa import NSScreen
+from typing import Tuple
 
 class System:
     @staticmethod
-    def get_screen_dimensions(screen: NSScreen=None):
+    def get_screen_dimensions(screen: NSScreen=None) -> Tuple[float, float]:
         """
         Returns the width and height of the user's main screen in points.
         """
@@ -21,7 +22,7 @@ class System:
         return screen_width, screen_height
 
     @staticmethod
-    def get_screen_dimensions_in_pixels(screen: NSScreen=None):
+    def get_screen_dimensions_in_pixels(screen: NSScreen=None) -> Tuple[float, float]:
         """
         Returns the width and height of the user's main screen in pixels. (For Retina displays)
         """

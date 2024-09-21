@@ -5,17 +5,17 @@ class App:
         """Initialize the base application."""
         self.app = NSApplication.sharedApplication()
 
-    def set_activation_policy(self, policy):
+    def set_activation_policy(self, policy) -> None:
         """Set the activation policy for the app (e.g., show/hide in dock)."""
         self.app.setActivationPolicy_(policy)
 
-    def set_float_policy(self):
+    def set_float_policy(self) -> None:
         self.app.setActivationPolicy_(NSApplicationActivationPolicyAccessory)
 
-    def run(self):
+    def run(self) -> None:
         """Run the application's event loop."""
         AppHelper.runEventLoop()
     
-    def quit(self):
+    def quit(self) -> None:
         """Stop the app"""
         NSApp.terminate_(self)

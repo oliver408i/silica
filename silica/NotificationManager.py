@@ -1,11 +1,12 @@
 from Cocoa import NSUserNotification, NSUserNotificationCenter, NSUserNotificationDefaultSoundName
+from typing import Optional
 
 class NotificationManager:
     def __init__(self):
         """Initialize the notification manager."""
         self.notification_center = NSUserNotificationCenter.defaultUserNotificationCenter()
 
-    def send_notification(self, title="Notification", subtitle=None, informative_text=None, sound=True):
+    def send_notification(self, title: str="Notification", subtitle: Optional[str]=None, informative_text: Optional[str]=None, sound: bool=True) -> None:
         """Create and send a macOS notification with optional sound."""
         # Create the notification
         notification = NSUserNotification.alloc().init()
