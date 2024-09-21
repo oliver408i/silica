@@ -20,7 +20,6 @@ def on_button_click():
     print("button pressed", silica.Constants.MessageBoxButtons.convert_response_to_index(button))
     
 # Create a window
-#window = Window(title="My Centered App", width=400, height=300)
 window = silica.FloatingPanel(width=400, height=500, ignoreMouseEvents=False, canBeKeyWindow=False)
 app.set_float_policy()
 

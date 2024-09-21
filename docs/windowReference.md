@@ -1,4 +1,3 @@
-## Standard Window reference
 This reference shows how to use the normal Window class of Silica.
 
 ### Making a window
@@ -28,3 +27,4 @@ app.run()
 - `get_size()` - Gets the size (as a tuple) of the window
 - `get_location()` - Gets the location (as a tuple) of the window
 - `is_fullscreen()` - Get if the window is in fullscreen
+- `get_screen()` - Returns the NSScreen object that this window is on. See the screen size reference

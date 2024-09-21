@@ -65,6 +65,10 @@ class FloatingPanel:
     def get_size(self):
         """Return the current size (width, height) of the panel."""
         return self.panel.frame().size.width, self.panel.frame().size.height
+
+    def get_screen(self):
+        """Return the screen that the panel is on."""
+        return self.panel.screen()
     
     def close(self):
         """Close the panel"""

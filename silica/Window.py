@@ -52,6 +52,10 @@ class Window:
         """Return True if the window is in fullscreen mode, False otherwise."""
         return (self.window.styleMask() & NSWindowStyleMaskFullScreen) != 0
     
+    def get_screen(self):
+        """Return the screen that the window is on."""
+        return self.window.screen()
+    
     def close(self):
         """Close window and quit the app"""
         self.window.close()
