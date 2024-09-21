@@ -25,4 +25,4 @@ Since floating panels do not have a title bar, they do not have a close button, 
 Float panels are not draggable, but you can still use `move_to(x, y)` to move them.
 
 ### Methods
-Floating panels as most of the methods of `silica.Window` except fullscreen and minimize methods.
+Floating panels have most of the methods of `silica.Window` except fullscreen and minimize methods.
