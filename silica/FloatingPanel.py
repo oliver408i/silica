@@ -1,20 +1,28 @@
 from Cocoa import NSPanel, NSWindowStyleMaskBorderless, NSNonactivatingPanelMask, NSBackingStoreBuffered, NSFloatingWindowLevel, NSColor, NSApp
 from .Widget import Widget
 
-class CustomPanel(NSPanel):
-    # Allow the panel to become the key window to capture input
+class NoKeyNoMain(NSPanel):
     def canBecomeKeyWindow(self):
         return False
-
-    # Optional: prevent it from becoming the main window, if desired
+    
     def canBecomeMainWindow(self):
         return False
 
+class NoMainOnly(NSPanel):
+    def canBecomeKeyWindow(self):
+        return True
+
+    def canBecomeMainWindow(self):
+        return False
 
 class FloatingPanel:
-    def __init__(self, width=400, height=100, ignoreMouseEvents=True, alpha=0.8, nonActivating=True):
+    def __init__(self, width=400, height=100, x=300, y=300,ignoreMouseEvents=True, alpha=0.8, nonActivating=True, canBeKeyWindow=True):
+        if canBeKeyWindow:
+            CustomPanel = NoMainOnly
+        else:
+            CustomPanel = NoKeyNoMain
         self.panel = CustomPanel.alloc().initWithContentRect_styleMask_backing_defer_(
-            ((300, 300), (width, height)),  # Window position and size
+            ((x, y), (width, height)),  # Window position and size
             NSWindowStyleMaskBorderless | (NSNonactivatingPanelMask if nonActivating else 0),  # Non-activating, borderless
             NSBackingStoreBuffered, False
         )
@@ -33,10 +41,22 @@ class FloatingPanel:
     def add_widget(self, widget: Widget):
         """Add a widget (Button, Label, etc.) to the window."""
         self.content_view.addSubview_(widget.widget)
+    
+    def move_to(self, x, y):
+        """Move the panel to a new position."""
+        self.panel.setFrameOrigin_((x, y))
+
+    def set_size(self, width, height):
+        """Set the size of the panel."""
+        self.panel.setContentSize_((width, height))
 
     def show(self):
         """Show the panel. (bring it to the front)"""
         self.panel.orderFront_(None)
+    
+    def hide(self):
+        """Hide the panel."""
+        self.panel.orderOut_(None)
     
     def close(self):
         """Close the panel"""

@@ -21,6 +21,10 @@ class Button(Widget):
 
         # Set the initial background color
         self._update_background_color(self.default_background_color)
+    
+    def update_text(self, text):
+        """Update the text of the button."""
+        self.widget.setTitle_(text)
 
     def add_tracking_area(self):
         """Add a tracking area directly to the button to handle mouse hover events."""
