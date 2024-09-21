@@ -8,12 +8,13 @@ See the `docs` folder for docs on Silica and how to use it. All functions and me
 See `standardWindowTest.py` for a normal window usage example  
 See `silicaFloatingWindow.py` for a floating panel usage example  
 See `silicaTesting.py` for how to use the `Image` and `Webview` classes  
+See `silicaStackView.py` for how to use the `StackView` class (and also checkbox buttons)
 ## API
 Silica currently supports the following functions:
 - Basic windows
 - Floating windows (panels)
 - Views: StackView (auto layout)
-- Buttons
+- Buttons (checkbox, radio buttons, and normal buttons)
 - Colors and styles for buttons
 - Labels (text fields, WIP styling for these)
 - Message boxes (popup info boxes, with customizable buttons and input boxes)
