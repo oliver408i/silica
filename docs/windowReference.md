@@ -19,6 +19,13 @@ To run the app, you must use the event loop from the App object, not the Window 
 app.run()
 ```
 
+### On resize and move
+You can add listeners for on move and on resize, which will trigger when the user moves the window or resizes it.
+```py
+window.on_move(lambda x, y: print(x, y))
+window.on_resize(lambda w, h: print(w, h))
+```
+
 ### Window actions
 - `minimize()` - Minimizes the window (it will not be brought up again until the user manually do it)
 - `move_to(x, y)` - Move the window

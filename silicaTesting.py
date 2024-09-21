@@ -25,4 +25,7 @@ webview.set_center_at(200, 200)
 
 window.add_widget(webview)
 
+window.on_move(lambda x, y: print(x, y))
+window.on_resize(lambda w, h: print(w, h))
+
 app.run()

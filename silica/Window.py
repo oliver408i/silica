@@ -1,10 +1,36 @@
 from Cocoa import NSWindow, NSApplication, NSApp, NSMakeRect, NSBackingStoreBuffered, NSObject, NSWindowStyleMaskFullScreen
 from PyObjCTools import AppHelper
+import objc
 from .Widget import Widget
 
 class WindowDelegate(NSObject):
+    def init(self):
+        """Proper Objective-C style init method."""
+        self = objc.super(WindowDelegate, self).init()  # Correct way to initialize in PyObjC
+        if self is None:
+            return None
+        
+        self.on_resize_handler = None
+        self.on_move_handler = None
+        return self
+
     def windowWillClose_(self, notification):
         NSApp.terminate_(self)
+
+    def windowDidResize_(self, notification):
+        """Called when the window is resized."""
+        if self.on_resize_handler:
+            window = notification.object()
+            new_size = window.frame().size
+            self.on_resize_handler(new_size.width, new_size.height)
+
+    def windowDidMove_(self, notification):
+        """Called when the window is moved."""
+        if self.on_move_handler:
+            window = notification.object()
+            new_origin = window.frame().origin
+            self.on_move_handler(new_origin.x, new_origin.y)
+
 
 class Window:
     def __init__(self, title="Window", width=400, height=300, x=100, y=100):
@@ -60,3 +86,10 @@ class Window:
         """Close window and quit the app"""
         self.window.close()
     
+    def on_resize(self, handler):
+        """Set a handler to be called when the window is resized."""
+        self.delegate.on_resize_handler = handler
+
+    def on_move(self, handler):
+        """Set a handler to be called when the window is moved."""
+        self.delegate.on_move_handler = handler
