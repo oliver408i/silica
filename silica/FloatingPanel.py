@@ -79,6 +79,10 @@ class FloatingPanel:
         """Close the panel"""
         self.panel.close()
     
+    def set_window_level(self, level) -> None:
+        """Set the window level to a specific value."""
+        self.panel.setLevel_(level)
+    
     def add_constraints(self, widget: Widget, marginTop=0, marginRight=0, marginBottom=0, marginLeft=0) -> None:
         """Add a constraints to the panel. Only used for auto layout. Use this to add margins, for example."""
         widget.widget.setTranslatesAutoresizingMaskIntoConstraints_(False)

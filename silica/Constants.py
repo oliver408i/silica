@@ -1,4 +1,4 @@
-from Cocoa import NSBezelStyleRounded, NSBezelStyleRegularSquare, NSBezelStyleTexturedRounded, NSBezelStyleTexturedSquare, NSBezelStyleDisclosure, NSBezelStyleShadowlessSquare, NSBezelStyleCircular, NSAlertFirstButtonReturn
+from Cocoa import NSBezelStyleRounded, NSBezelStyleRegularSquare, NSBezelStyleTexturedRounded, NSBezelStyleTexturedSquare, NSBezelStyleDisclosure, NSBezelStyleShadowlessSquare, NSBezelStyleCircular, NSAlertFirstButtonReturn, NSNormalWindowLevel, NSFloatingWindowLevel, NSModalPanelWindowLevel, NSPopUpMenuWindowLevel, NSScreenSaverWindowLevel
 
 """
 	•	NSBezelStyleRounded: Standard rounded button.
@@ -35,3 +35,10 @@ class MessageBoxButtons:
 		Returns an integer index (0-any) corresponding to the button clicked.
 		"""
 		return response - NSAlertFirstButtonReturn
+
+class WindowLevels:
+	Normal = NSNormalWindowLevel
+	Floating = NSFloatingWindowLevel
+	ModalPanel = NSModalPanelWindowLevel
+	PopUpMenu = NSPopUpMenuWindowLevel
+	ScreenSaver = NSScreenSaverWindowLevel

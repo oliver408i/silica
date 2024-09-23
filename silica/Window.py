@@ -18,6 +18,10 @@ class WindowDelegate(NSObject):
 
     def windowWillClose_(self, notification):
         NSApp.terminate_(self)
+    
+    def set_window_level(self, level) -> None:
+        """Set the window level to a specific value."""
+        self.window.setLevel_(level)
 
     def windowDidResize_(self, notification):
         """Called when the window is resized."""
