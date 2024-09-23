@@ -36,3 +36,4 @@ window.on_resize(lambda w, h: print(w, h))
 - `is_fullscreen()` - Get if the window is in fullscreen
 - `get_screen()` - Returns the NSScreen object that this window is on. See the screen size reference
 - `add_constraints(widget, marginTop=0, marginRight=0, marginBottom=0, marginLeft=0)` - Add constraints to the window. Only used for auto layout. Use this to add margins, for example.
+- `set_window_level(level)` - Set the level of this window, basically how much in front or in the back the window should be relative to other windows. The `Constants` module has a `WindowLevels` class that contains the basic levels.
