@@ -1,9 +1,9 @@
 import objc
-from Cocoa import NSApplication, NSPanel, NSTextField, NSButton, NSBackingStoreBuffered, NSView
+from Cocoa import NSApplication, NSPanel, NSTextField, NSButton, NSBackingStoreBuffered, NSView, NSWindowCollectionBehaviorCanJoinAllSpaces, NSScreenSaverWindowLevel, NSWindowCollectionBehaviorFullScreenAuxiliary, NSProcessInfo
 from AppKit import NSApp, NSColor, NSWindowStyleMaskBorderless, NSNonactivatingPanelMask, NSFloatingWindowLevel, NSApplicationActivationPolicyAccessory
 from WebKit import WKWebView, WKPreferences, WKWebViewConfiguration
-from PyObjCTools.AppHelper import runEventLoop
 
+from PyObjCTools.AppHelper import runEventLoop
 
 class DraggableView(NSView):
     def mouseDown_(self, event):
@@ -21,7 +21,7 @@ class DraggableView(NSView):
 class CustomPanel(NSPanel):
     # Allow the panel to become the key window to capture input
     def canBecomeKeyWindow(self):
-        return False
+        return True
 
     # Optional: prevent it from becoming the main window, if desired
     def canBecomeMainWindow(self):
@@ -35,7 +35,7 @@ class WebViewWindow:
 
         # Create a custom panel that can become the key window
         self.panel = CustomPanel.alloc().initWithContentRect_styleMask_backing_defer_(
-            ((300, 300), (700, 600)),
+            ((300, 300), (700, 800)),
             NSWindowStyleMaskBorderless | NSNonactivatingPanelMask,
             NSBackingStoreBuffered, False
         )
@@ -43,7 +43,7 @@ class WebViewWindow:
         self.panel.setBackgroundColor_(NSColor.clearColor())
         self.panel.setOpaque_(False)
         self.panel.setAlphaValue_(0.85)
-        self.panel.setLevel_(NSFloatingWindowLevel)
+        self.panel.setLevel_(NSScreenSaverWindowLevel)
         self.panel.setHidesOnDeactivate_(False)
 
         self.draggable_view = DraggableView.alloc().initWithFrame_(((0, 0), (700, 50)))
@@ -51,6 +51,10 @@ class WebViewWindow:
         self.draggable_view.setWantsLayer_(True)
         self.draggable_view.layer().setBackgroundColor_(NSColor.grayColor().CGColor())
         self.panel.contentView().addSubview_(self.draggable_view)
+
+        self.panel.setCollectionBehavior_(
+            NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorFullScreenAuxiliary
+        )
 
         self.url_input = NSTextField.alloc().initWithFrame_(((10, 60), (480, 40)))
         self.url_input.setStringValue_("https://www.example.com")
@@ -76,8 +80,8 @@ class WebViewWindow:
         preferences.setJavaScriptEnabled_(True)
         web_config.setPreferences_(preferences)
 
-        self.web_view = WKWebView.alloc().initWithFrame_configuration_(((0, 150), (700, 450)), web_config)
-        ns_url = objc.lookUpClass("NSURL").URLWithString_("https://www.google.com")
+        self.web_view = WKWebView.alloc().initWithFrame_configuration_(((0, 150), (700, 550)), web_config)
+        ns_url = objc.lookUpClass("NSURL").URLWithString_("https://www.desmos.com")
         request = objc.lookUpClass("NSURLRequest").requestWithURL_(ns_url)
         self.web_view.loadRequest_(request)
 
@@ -85,7 +89,6 @@ class WebViewWindow:
 
         # Initially, capture mode is off (keyboard input is ignored by the widget)
         self.is_capture_mode = False
-
     def create_button(self, title, position, action):
         button = NSButton.alloc().initWithFrame_(((position[0], position[1]), (100, 40)))
         button.setTitle_(title)

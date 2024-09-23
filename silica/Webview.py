@@ -1,8 +1,12 @@
-from Cocoa import NSMakeRect
-from WebKit import WKWebView, NSURLRequest, NSURL, WKWebViewConfiguration, WKPreferences
+from Cocoa import NSMakeRect, NSObject
+from WebKit import WKWebView, NSURLRequest, NSURL, WKWebViewConfiguration, WKPreferences, WKScriptMessageHandler
 from .Widget import Widget
 import warnings
 from typing import Callable
+
+class ScriptMessageHandler(NSObject, WKScriptMessageHandler):
+    def userContentController_didReceiveScriptMessage_(self, userContentController, message):
+        self._command(message.body())
 
 class WebView(Widget):
     def __init__(self, width: int, height: int, url: str, useFrame: bool=True):
@@ -35,6 +39,11 @@ class WebView(Widget):
             self.widget.loadRequest_(request)
         else:
             warnings.warn(f"Error: Invalid URL {url}")
+    
+    def load_local_file(self, path: str) -> None:
+        """Load a local file. Path must be an absolute path."""
+        request = NSURLRequest.requestWithURL_(NSURL.fileURLWithPath_(path))
+        self.widget.loadRequest_(request)
 
     def reload(self) -> None:
         """Reload the current webpage."""
@@ -74,3 +83,14 @@ class WebView(Widget):
                     callback(result)
         
         self.widget.evaluateJavaScript_completionHandler_(script, js_callback)
+    
+    def set_message_handler(self, command: Callable[[str], None]):
+        """
+        Set a message handler for receiving messages from the webview. Messages can be sent from the webview using window.webkit.messageHandlers.callbackHandler.postMessage('someMessage');
+
+        command - A function to handle the message. The message will be passed as the first argument to the function.
+        """
+        self.widget.configuration.userContentController.addScriptMessageHandler_name_(
+        ScriptMessageHandler.alloc().init(),
+        command 
+    )
