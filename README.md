@@ -9,6 +9,8 @@ See `standardWindowTest.py` for a normal window usage example
 See `silicaFloatingWindow.py` for a floating panel usage example  
 See `silicaTesting.py` for how to use the `Image` and `Webview` classes  
 See `silicaStackView.py` for how to use the `StackView` class (and also checkbox buttons)
+See `silicaWebview.py` for how to use the `Webview` class
+See `silicaMenubar.py` for how to make a menubar (status bar icon)
 ## API
 Silica currently supports the following functions:
 - Basic windows

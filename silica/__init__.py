@@ -12,6 +12,8 @@ from .Image import Image
 from .Webview import WebView
 from .System import System
 from .views import StackView
+from .menubar.StatusBar import StatusBar
+from .menubar.MenuItem import MenuItem
 
 from objc import ObjCPointerWarning
 import warnings
@@ -33,4 +35,6 @@ __all__ = [
     "WebView",
     "System",
     "StackView",
+    "StatusBar",
+    "MenuItem",
 ]

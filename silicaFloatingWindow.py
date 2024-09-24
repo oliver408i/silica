@@ -21,7 +21,7 @@ def on_button_click():
     
 # Create a window
 window = silica.FloatingPanel(width=400, height=500, ignoreMouseEvents=False, canBeKeyWindow=False)
-app.set_float_policy()
+app.set_no_dock_icon()
 
 # Create a label and center it at a specific coordinate
 label = Label(text="Welcome to the centered app!", width=200, height=20)

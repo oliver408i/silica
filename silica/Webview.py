@@ -1,10 +1,12 @@
 from Cocoa import NSMakeRect, NSObject
-from WebKit import WKWebView, NSURLRequest, NSURL, WKWebViewConfiguration, WKPreferences, WKScriptMessageHandler
+from WebKit import WKWebView, NSURLRequest, NSURL, WKWebViewConfiguration, WKPreferences
 from .Widget import Widget
-import warnings
+import warnings, objc
 from typing import Callable
 
-class ScriptMessageHandler(NSObject, WKScriptMessageHandler):
+WKScriptMessageHandler = objc.protocolNamed('WKScriptMessageHandler')
+
+class ScriptMessageHandler(NSObject, protocols=[WKScriptMessageHandler]):
     def userContentController_didReceiveScriptMessage_(self, userContentController, message):
         self._command(message.body())
 
