@@ -22,4 +22,4 @@ Silica currently supports the following functions:
 - Message boxes (popup info boxes, with customizable buttons and input boxes)
 - Notifications
 - Webviews (using WebKit)
-- Menubar (WIP)
+- Menubar (status bar menus, plus submenus)
