@@ -14,10 +14,15 @@ class WindowDelegate(NSObject):
         
         self.on_resize_handler = None
         self.on_move_handler = None
+        self.close_handler = None
+        self.shouldQuitOnClose = False
         return self
 
     def windowWillClose_(self, notification):
-        NSApp.terminate_(self)
+        if self.close_handler:
+            self.close_handler()
+        if self.shouldQuitOnClose:
+            NSApp.terminate_(self)
     
     def set_window_level(self, level) -> None:
         """Set the window level to a specific value."""
@@ -39,7 +44,7 @@ class WindowDelegate(NSObject):
 
 
 class Window:
-    def __init__(self, title: str="Window", width: float=400, height: float=300, x: float=100, y: float=100):
+    def __init__(self, title: str="Window", width: float=400, height: float=300, x: float=100, y: float=100, shouldQuitOnClose: bool=True):
         """Initialize a standard window with a specified title, width, height, and position."""
         frame = NSMakeRect(x, y, width, height)
         self.window = NSWindow.alloc().initWithContentRect_styleMask_backing_defer_(
@@ -51,6 +56,7 @@ class Window:
         self.window.setTitle_(title)
         self.window.makeKeyAndOrderFront_(None)
         self.delegate = WindowDelegate.alloc().init()
+        self.delegate.shouldQuitOnClose = shouldQuitOnClose
         self.window.setDelegate_(self.delegate)
 
     def add_widget(self, widget: Widget) -> None:
@@ -93,9 +99,21 @@ class Window:
         """Close window and quit the app"""
         self.window.close()
     
+    def hide(self) -> None:
+        """Hide the window."""
+        self.window.orderOut_(None)
+    
+    def show(self) -> None:
+        """Show the window."""
+        self.window.makeKeyAndOrderFront_(None)
+    
     def on_resize(self, handler: Callable[[float, float], None]) -> None:
         """Set a handler to be called when the window is resized."""
         self.delegate.on_resize_handler = handler
+
+    def on_close(self, handler: Callable[[], None]) -> None:
+        """Set a handler to be called when the window is closed. Note this doesn't override the default window close behavior, instead it is called before the default window close behavior (i.e. quitting the app)."""
+        self.delegate.close_handler = handler
     
     def add_constraints(self, widget: Widget, marginTop=0, marginRight=0, marginBottom=0, marginLeft=0) -> None:
         """Add a constraints to the window. Only used for auto layout. Use this to add margins, for example."""

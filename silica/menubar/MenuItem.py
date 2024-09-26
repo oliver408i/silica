@@ -17,8 +17,6 @@ class MenuItem:
         self.submenu = None
         self._command = action
     
-    
-    
     def add_submenu_item(self, item: 'MenuItem') -> None: # Must be quoted because it isn't defined *yet*. It's a forward declaration
         """Add a submenu item to the menu item."""
         if not self.submenu:

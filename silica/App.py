@@ -20,3 +20,7 @@ class App:
     def set_no_dock_icon(self) -> None:
         """Prevents the app from showing in the dock, but will still allow it to have windows, guis, etc"""
         self.app.setActivationPolicy_(NSApplicationActivationPolicyAccessory)
+    
+    def focus(self) -> None:
+        """Forces the app and all its visible windows to gain focus"""
+        NSApp.activateIgnoringOtherApps_(True)

@@ -6,3 +6,5 @@ __pycache__
 build
 dist
 silica.egg-info
+floatwindow.py
+webkittest.py

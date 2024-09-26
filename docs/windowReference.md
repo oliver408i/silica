@@ -6,6 +6,7 @@ app = silica.App()
 window = Window(title="My App", width=400, height=300)
 ```
 Optionally, you can set the x and y of the window by passing in `x=` and `y=` into the constructor
+The `shouldQuitOnClose` bool parameter can be set to False to prevent the window from quitting the app on close. This is useful for menubar apps, or opening secondary windows
 
 ### Adding stuff to a window
 To add buttons, labels, and inputs to a window:
@@ -26,7 +27,14 @@ window.on_move(lambda x, y: print(x, y))
 window.on_resize(lambda w, h: print(w, h))
 ```
 
-### Window actions
+### On close
+You can add listeners for on close, which will trigger when the user closes the window
+```py
+window.on_close(lambda: print("Window closed"))
+```
+Note this doesn't override the `shouldQuitOnClose` parameter. It is called before the app is quitted (if applicable)
+
+### (More) Window methods
 - `minimize()` - Minimizes the window (it will not be brought up again until the user manually do it)
 - `move_to(x, y)` - Move the window
 - `set_size(width, height)` - Resizes the window

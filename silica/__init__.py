@@ -20,6 +20,8 @@ import warnings
 
 warnings.simplefilter("ignore", ObjCPointerWarning)
 
+__doc__ = """Silica is a lightweight, MacOS native GUI library for Python."""
+
 __all__ = [
     "App",
     "Window",

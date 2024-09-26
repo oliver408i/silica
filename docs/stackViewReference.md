@@ -37,4 +37,4 @@ window.add_constraints(stackView)
 window.add_constraints(stackView, marginTop=10, marginRight=10, marginBottom=10, marginLeft=10)
 ```
 
-You can also use a `FloatingPanel`. Simpley replace the `window` in the above examples a `FloatingPanel` object.
+You can also use a `FloatingPanel`. Simply replace the `window` in the above examples with a `FloatingPanel` object.

@@ -1,3 +1,21 @@
+# 
+# -- WARNING -- 
+# THIS IS **NOT** A SILICA EXAMPLE FILE, NOR A SILICA SOURCE CODE FILE
+#
+# Do not reference off this file! See the files beginning with `silica` in the repo
+#
+# -- WARNING --
+#
+
+"""
+!!
+THIS IS **NOT** A SILICA EXAMPLE FILE, NOR A SILICA SOURCE CODE FILE
+!!
+"""
+
+# These files are only for me to test basic objective-c features and are not part of the silica project
+
+
 import objc
 from Cocoa import NSApplication, NSPanel, NSTextField, NSButton, NSBackingStoreBuffered, NSView, NSWindowCollectionBehaviorCanJoinAllSpaces, NSScreenSaverWindowLevel, NSWindowCollectionBehaviorFullScreenAuxiliary, NSProcessInfo
 from AppKit import NSApp, NSColor, NSWindowStyleMaskBorderless, NSNonactivatingPanelMask, NSFloatingWindowLevel, NSApplicationActivationPolicyAccessory
