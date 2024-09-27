@@ -12,10 +12,11 @@ messageBox = silica.MessageBoxManager()
 def quit():
     app.quit()
 
-window = None # YOU MUST KEEP A GLOBAL REFERENCE TO THE WINDOW! Else it will cause a segmentation fault when it is closed.
+
+windows = [] # Prevent dereferencing errors (seg faults)
 
 def showWindow():
-    global window
+    global windows
 
     window = silica.Window(title="My Cool App", width=400, height=300, x=100, y=100, shouldQuitOnClose=False) # shouldQuitOnClose=False to prevent the window from quitting the app on close
 
@@ -23,6 +24,8 @@ def showWindow():
     window.add_widget(label)
     window.show() # bring the window to the top of the app layer
     app.focus() # bring the app to the top of the system window layer
+
+    windows.append(window)
 
 menuBar = silica.StatusBar(image_path="shapezio.jpg") # If image_path is None, a text status bar will be used
 # For example, menuBar = silica.StatusBar(text="My Cool App") will also work, creating a text status bar

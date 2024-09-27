@@ -6,7 +6,7 @@ if sys.platform != 'darwin':
 
 setup(
     name="silica",
-    version="0.0.4",
+    version="0.0.5",
     description="Python GUI library for writing MacOS native apps using pyObjC and Cocoa",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",

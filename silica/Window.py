@@ -23,10 +23,7 @@ class WindowDelegate(NSObject):
             self.close_handler()
         if self.shouldQuitOnClose:
             NSApp.terminate_(self)
-    
-    def set_window_level(self, level) -> None:
-        """Set the window level to a specific value."""
-        self.window.setLevel_(level)
+
 
     def windowDidResize_(self, notification):
         """Called when the window is resized."""
@@ -94,6 +91,10 @@ class Window:
     def get_screen(self):
         """Return the objc NSScreen object representing the screen that the window is on."""
         return self.window.screen()
+
+    def set_window_level(self, level) -> None:
+        """Set the window level to a specific value."""
+        self.window.setLevel_(level)
     
     def close(self) -> None:
         """Close window and quit the app"""
